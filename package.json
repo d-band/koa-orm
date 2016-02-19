@@ -1,0 +1,39 @@
+{
+  "name": "koa-orm",
+  "version": "0.0.1",
+  "description": "koa orm using sequelize & squel",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r co-mocha -R spec",
+    "coveralls": "istanbul cover _mocha -- -r co-mocha -R spec && cat ./coverage/lcov.info | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d-band/koa-orm.git"
+  },
+  "keywords": [
+    "koa",
+    "orm",
+    "sequelize",
+    "squel"
+  ],
+  "author": "d-band",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/d-band/koa-orm/issues"
+  },
+  "homepage": "https://github.com/d-band/koa-orm#readme",
+  "dependencies": {
+    "sequelize": "~3.19.3",
+    "squel": "~4.3.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "co-mocha": "^1.1.2",
+    "istanbul": "^0.4.2",
+    "koa": "^1.1.2",
+    "mocha": "^2.4.5",
+    "mysql": "^2.10.2",
+    "supertest": "^1.2.0"
+  }
+}
