@@ -38,6 +38,7 @@ app.use(orm.middleware);
 
 app.use(function* (next) {
   var raws = yield this.orm().sql.select().from('table').query();
+  // var raws = yield this.orm('orm_test').sql.select().from('table').query();
   this.body = raws;
 });
 ```
