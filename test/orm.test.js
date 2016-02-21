@@ -71,4 +71,18 @@ describe('orm test', function() {
     expect(meta).to.have.property('insertId');
   });
 
+  it('insert with field type date', function*() {
+    let meta = yield db.sql
+      .insert()
+      .into('foo')
+      .setFields({
+        name: 'hello4',
+        pass: 'world4',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }).query();
+      
+    expect(meta).to.have.property('insertId');
+  });
+
 });
