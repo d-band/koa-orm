@@ -1,6 +1,6 @@
 {
   "name": "koa-orm",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "koa orm using sequelize & squel",
   "main": "index.js",
   "scripts": {
@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/d-band/koa-orm#readme",
   "dependencies": {
-    "sequelize": "~3.19.3",
-    "squel": "~4.3.0"
+    "sequelize": "~3.21.0",
+    "squel": "~5.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
