@@ -8,6 +8,8 @@ const data = require('./data');
 const databases = orm([config]);
 
 describe('orm test', function() {
+  this.timeout(0);
+  
   const db = databases.orm_test;
 
   before(function*() {

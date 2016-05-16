@@ -8,6 +8,8 @@ const config = require('./config');
 const orm = require('../');
 
 describe('koa-orm', function() {
+  this.timeout(0);
+  
   const _orm = orm([config]);
 
   before(function*() {
