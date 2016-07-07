@@ -15,7 +15,7 @@ describe('koa-orm', function() {
   before(function*() {
     let db = _orm.database();
     // init db
-    yield db.sequelize.sync({
+    yield db.sync({
       force: true
     });
     // insert data

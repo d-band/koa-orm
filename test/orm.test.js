@@ -14,7 +14,7 @@ describe('orm test', function() {
 
   before(function*() {
     // init db
-    yield db.sequelize.sync({
+    yield db.sync({
       force: true
     });
     // insert data
