@@ -1,6 +1,7 @@
 # koa-orm
 
 [![NPM version](https://img.shields.io/npm/v/koa-orm.svg)](https://www.npmjs.com/package/koa-orm)
+[![NPM downloads](https://img.shields.io/npm/dm/koa-orm.svg)](https://www.npmjs.com/package/koa-orm)
 [![Dependency Status](https://david-dm.org/d-band/koa-orm.svg)](https://david-dm.org/d-band/koa-orm)
 [![Build Status](https://travis-ci.org/d-band/koa-orm.svg?branch=master)](https://travis-ci.org/d-band/koa-orm)
 [![Coverage Status](https://coveralls.io/repos/github/d-band/koa-orm/badge.svg?branch=master)](https://coveralls.io/github/d-band/koa-orm?branch=master)
