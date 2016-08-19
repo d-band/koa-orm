@@ -25,22 +25,23 @@ describe('orm test', function() {
   it('sql query', function*() {
     let foos = yield db.sql
       .select()
-      .field("name")
-      .field("pass")
+      .field('name')
+      .field('pass')
       .from('foo')
       .query();
 
     let bars = yield db.sql
       .select()
       .from('bar')
-      .field("title")
-      .field("content")
+      .field('title')
+      .field('content')
+      .field('foo')
       .query();
 
     let foo = yield db.sql
       .select()
-      .field("name")
-      .field("pass")
+      .field('name')
+      .field('pass')
       .from('foo')
       .where('name = ?', 'hello')
       .queryOne();
@@ -48,8 +49,9 @@ describe('orm test', function() {
     let bar = yield db.sql
       .select()
       .from('bar')
-      .field("title")
-      .field("content")
+      .field('title')
+      .field('content')
+      .field('foo')
       .where('title = ?', 'hello')
       .queryOne();
 
@@ -61,9 +63,9 @@ describe('orm test', function() {
 
   it('raw sql query', function*() {
     let foos = yield db.query('select name,pass from foo;');
-    let bars = yield db.query('select title,content from bar;');
+    let bars = yield db.query('select title,content,foo from bar;');
     let foo = yield db.queryOne('select name,pass from foo where name=?;', ['hello']);
-    let bar = yield db.queryOne('select title,content from bar where title=?;', ['hello']);
+    let bar = yield db.queryOne('select title,content,foo from bar where title=?;', ['hello']);
     let meta = yield db.query('insert into foo (name, pass, createdAt, updatedAt) values (?, ?, ?, ?);', ['hello3', 'world3', new Date(), new Date()]);
 
     expect(foos).to.deep.equal(data.foos);

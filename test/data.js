@@ -10,9 +10,11 @@ module.exports = {
   }],
   bars: [{
     title: 'hello',
-    content: 'world'
+    content: 'world',
+    foo: 1
   }, {
     title: 'hello2',
-    content: 'world2'
+    content: 'world2',
+    foo: 2
   }]
 };

@@ -30,16 +30,16 @@ describe('koa-orm', function() {
         // SQL query
         let foos = yield this.orm().sql
           .select()
-          .field("name")
-          .field("pass")
+          .field('name')
+          .field('pass')
           .from('foo')
           .query();
 
         let bars = yield this.orm().sql
           .select()
           .from('bar')
-          .field("title")
-          .field("content")
+          .field('title')
+          .field('content')
           .query();
 
         this.body = {
@@ -66,16 +66,16 @@ describe('koa-orm', function() {
         // SQL query
         let foos = yield this.orm().sql
           .select()
-          .field("name")
-          .field("pass")
+          .field('name')
+          .field('pass')
           .from('foo')
           .query();
 
         let bars = yield db.sql
           .select()
           .from('bar')
-          .field("title")
-          .field("content")
+          .field('title')
+          .field('content')
           .query();
 
         this.body = {
