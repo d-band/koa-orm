@@ -11,8 +11,9 @@ module.exports = (db_configs) => {
   const databases = orm(db_configs);
 
   function db(name) {
+    const first = db_configs[0];
     // Default is first database
-    name = name || db_configs[0].db || db_configs[0].database;
+    name = name || first.name || first.db || first.database;
     return databases[name];
   }
 
