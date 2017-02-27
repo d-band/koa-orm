@@ -1,51 +1,48 @@
 'use strict';
 
 const request = require('supertest');
-const koa = require('koa');
+const Koa = require('koa');
 
 const data = require('./data');
 const config = require('./config');
-const orm = require('../');
+const ORM = require('../');
 
 describe('koa-orm', function() {
   this.timeout(0);
-  
-  const _orm = orm([config]);
 
-  before(function*() {
-    let db = _orm.database();
+  const orm = ORM([config]);
+
+  before(done => {
+    const db = orm.database();
     // init db
-    yield db.sync({
-      force: true
-    });
-    // insert data
-    yield db.Foo.bulkCreate(data.foos);
-    yield db.Bar.bulkCreate(data.bars);
+    db.sync({ force: true })
+      .then(() => db.Foo.bulkCreate(data.foos))
+      .then(() => db.Bar.bulkCreate(data.bars))
+      .then(() => done());
   });
 
-  it('orm middleware test', function(done) {
-    var app = koa()
-      .use(_orm.middleware)
-      .use(function*() {
+  it('orm middleware test', done => {
+    const app = new Koa();
+    app.use(orm.middleware)
+      .use((ctx) => {
         // SQL query
-        let foos = yield this.orm().sql
+        const foos = ctx.orm().sql
           .select()
           .field('name')
           .field('pass')
           .from('foo')
           .query();
 
-        let bars = yield this.orm().sql
+        const bars = ctx.orm().sql
           .select()
           .from('bar')
           .field('title')
           .field('content')
           .query();
 
-        this.body = {
-          foos: foos,
-          bars: bars
-        };
+        return Promise.all([foos, bars]).then(v => {
+          ctx.body = { foos: v[0], bars: v[1] };
+        });
       });
 
     request(app.listen()).get('/')
@@ -55,33 +52,32 @@ describe('koa-orm', function() {
       .expect(200, done);
   });
 
-  it('orm config not Array & middleware regist once', function(done) {
-    var o = orm(config);
-    var db = o.database('orm_test');
-    var mw = o.middleware;
-    var app = koa()
+  it('orm config not Array & middleware regist once', done => {
+    const o = ORM(config);
+    const db = o.database('orm_test');
+    const mw = o.middleware;
+    const app = new Koa();
+    app.use(mw)
       .use(mw)
-      .use(mw)
-      .use(function*() {
+      .use((ctx) => {
         // SQL query
-        let foos = yield this.orm().sql
+        const foos = ctx.orm().sql
           .select()
           .field('name')
           .field('pass')
           .from('foo')
           .query();
 
-        let bars = yield db.sql
+        const bars = db.sql
           .select()
           .from('bar')
           .field('title')
           .field('content')
           .query();
 
-        this.body = {
-          foos: foos,
-          bars: bars
-        };
+        return Promise.all([foos, bars]).then(v => {
+          ctx.body = { foos: v[0], bars: v[1] };
+        });
       });
 
     request(app.listen()).get('/')

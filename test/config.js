@@ -1,4 +1,5 @@
 'use strict';
+
 const join = require('path').join;
 const env = process.env;
 

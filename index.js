@@ -17,12 +17,10 @@ module.exports = (db_configs) => {
     return databases[name];
   }
 
-  function* mw(next) {
-    if (this.orm) return yield next;
-    Object.assign(this, {
-      orm: db
-    });
-    yield next;
+  function mw(ctx, next) {
+    if (ctx.orm) return next();
+    ctx.orm = db;
+    return next();
   }
 
   return {

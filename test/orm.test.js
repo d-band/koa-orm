@@ -9,28 +9,26 @@ const databases = orm([config]);
 
 describe('orm test', function() {
   this.timeout(0);
-  
+
   const db = databases.orm_test;
 
-  before(function*() {
+  before(done => {
     // init db
-    yield db.sync({
-      force: true
-    });
-    // insert data
-    yield db.Foo.bulkCreate(data.foos);
-    yield db.Bar.bulkCreate(data.bars);
+    db.sync({ force: true })
+      .then(() => db.Foo.bulkCreate(data.foos))
+      .then(() => db.Bar.bulkCreate(data.bars))
+      .then(() => done());
   });
 
-  it('sql query', function*() {
-    let foos = yield db.sql
+  it('sql query', done => {
+    const foos = db.sql
       .select()
       .field('name')
       .field('pass')
       .from('foo')
       .query();
 
-    let bars = yield db.sql
+    const bars = db.sql
       .select()
       .from('bar')
       .field('title')
@@ -38,7 +36,7 @@ describe('orm test', function() {
       .field('foo')
       .query();
 
-    let foo = yield db.sql
+    const foo = db.sql
       .select()
       .field('name')
       .field('pass')
@@ -46,7 +44,7 @@ describe('orm test', function() {
       .where('name = ?', 'hello')
       .queryOne();
 
-    let bar = yield db.sql
+    const bar = db.sql
       .select()
       .from('bar')
       .field('title')
@@ -55,28 +53,34 @@ describe('orm test', function() {
       .where('title = ?', 'hello')
       .queryOne();
 
-    expect(foos).to.deep.equal(data.foos);
-    expect(bars).to.deep.equal(data.bars);
-    expect(foo).to.deep.equal(data.foos[0]);
-    expect(bar).to.deep.equal(data.bars[0]);
+    Promise.all([foos, bars, foo, bar]).then(v => {
+      expect(v[0]).to.deep.equal(data.foos);
+      expect(v[1]).to.deep.equal(data.bars);
+      expect(v[2]).to.deep.equal(data.foos[0]);
+      expect(v[3]).to.deep.equal(data.bars[0]);
+      done();
+    });
   });
 
-  it('raw sql query', function*() {
-    let foos = yield db.query('select name,pass from foo;');
-    let bars = yield db.query('select title,content,foo from bar;');
-    let foo = yield db.queryOne('select name,pass from foo where name=?;', ['hello']);
-    let bar = yield db.queryOne('select title,content,foo from bar where title=?;', ['hello']);
-    let meta = yield db.query('insert into foo (name, pass, createdAt, updatedAt) values (?, ?, ?, ?);', ['hello3', 'world3', new Date(), new Date()]);
+  it('raw sql query', done => {
+    const foos = db.query('select name,pass from foo;');
+    const bars = db.query('select title,content,foo from bar;');
+    const foo = db.queryOne('select name,pass from foo where name=?;', ['hello']);
+    const bar = db.queryOne('select title,content,foo from bar where title=?;', ['hello']);
+    const meta = db.query('insert into foo (name, pass, createdAt, updatedAt) values (?, ?, ?, ?);', ['hello3', 'world3', new Date(), new Date()]);
 
-    expect(foos).to.deep.equal(data.foos);
-    expect(bars).to.deep.equal(data.bars);
-    expect(foo).to.deep.equal(data.foos[0]);
-    expect(bar).to.deep.equal(data.bars[0]);
-    expect(meta).to.have.property('insertId');
+    Promise.all([foos, bars, foo, bar, meta]).then(v => {
+      expect(v[0]).to.deep.equal(data.foos);
+      expect(v[1]).to.deep.equal(data.bars);
+      expect(v[2]).to.deep.equal(data.foos[0]);
+      expect(v[3]).to.deep.equal(data.bars[0]);
+      expect(v[4]).to.have.property('insertId');
+      done();
+    });
   });
 
-  it('insert with field type date', function*() {
-    let meta = yield db.sql
+  it('insert with field type date', done => {
+    db.sql
       .insert()
       .into('foo')
       .setFields({
@@ -84,9 +88,10 @@ describe('orm test', function() {
         pass: 'world4',
         createdAt: new Date(),
         updatedAt: new Date()
-      }).query();
-      
-    expect(meta).to.have.property('insertId');
+      }).query().then(v => {
+      expect(v).to.have.property('insertId');
+      done();
+    });
   });
 
 });
