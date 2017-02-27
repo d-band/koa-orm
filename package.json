@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/d-band/koa-orm#readme",
   "dependencies": {
-    "sequelize": "^3.26.0",
+    "sequelize": "^3.30.2",
     "squel": "^5.6.0"
   },
   "devDependencies": {
