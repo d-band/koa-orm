@@ -10,15 +10,18 @@ koa orm using [sequelize](https://github.com/sequelize/sequelize) & [squel](http
 
 ## Installation
 
-```
-$ npm install koa-orm
+```bash
+npm install koa-orm
 ```
 
 ## Example
 
+Single database
+
 ```js
-var join = require('path').join;
-var config = {
+const join = require('path').join;
+const config = {
+  name: 'test',
   modelPath: join(__dirname, 'models'),
   db: 'orm_test',
   username: 'root',
@@ -33,24 +36,71 @@ var config = {
   }
 };
 
-var orm = require('koa-orm')(config);
+const orm = require('koa-orm')(config);
 
 app.use(orm.middleware);
 
-app.use(function* (next) {
-  var raws = yield this.orm().sql.select().from('table').query();
-  // var raws = yield this.orm('orm_test').sql.select().from('table').query();
-  this.body = raws;
+app.use(async function (ctx) {
+  const raws = await ctx.orm().sql.select().from('table').query();
+  // const raws = await ctx.orm('test').sql.select().from('table').query();
+  ctx.body = raws;
 });
 ```
 
-More examples: [test](./test/index.test.js)
+Multiple database
+
+```js
+const join = require('path').join;
+const configs = [{
+  name: 'user',
+  db: 'db_user',
+  username: 'root',
+  password: 'pass',
+  dialect: 'mysql',
+  host: '127.0.0.1',
+  port: 3306,
+  modelPath: join(__dirname, 'models/user')
+}, {
+  name: 'product',
+  db: 'db_product',
+  username: 'root',
+  password: 'pass',
+  dialect: 'mysql',
+  host: '127.0.0.1',
+  port: 3306,
+  modelPath: join(__dirname, 'models/product')
+}];
+
+const orm = require('koa-orm')(configs);
+
+app.use(orm.middleware);
+
+app.use(async function (ctx) {
+  const { User } = ctx.orm('user');
+  const { Product } = ctx.orm('product');
+  const { userId } = ctx.params;
+  
+  const user = await User.findById(userId);
+  const products = await Product.findAll({
+    where: { userId }
+  });
+  ctx.body = { user, products };
+});
+```
 
 ## API
 
 #### `orm(configs)`
 
 * `configs`: Multi database config array.
+
+## Koa 1 Support
+
+To use `koa-orm` with koa@1, please use [koa-orm 1.x](https://github.com/d-band/koa-orm/tree/v1.x).
+
+```bash
+npm install koa-orm@1 --save
+```
 
 ## License
 
