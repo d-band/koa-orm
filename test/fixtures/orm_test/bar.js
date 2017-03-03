@@ -9,14 +9,12 @@ module.exports = function(sequelize, types) {
       type: types.STRING(50)
     }
   }, {
-    tableName: 'bar',
-    classMethods: {
-      associate: function(models) {
-        Bar.belongsTo(models.Foo, {
-          foreignKey: 'foo'
-        });
-      }
-    }
+    tableName: 'bar'
   });
+  Bar.associate = (models) => {
+    Bar.belongsTo(models.Foo, {
+      foreignKey: 'foo'
+    });
+  };
   return Bar;
 };
