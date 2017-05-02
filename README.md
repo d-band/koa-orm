@@ -1,5 +1,7 @@
 # koa-orm
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/d-band/koa-orm.svg)](https://greenkeeper.io/)
+
 [![NPM version](https://img.shields.io/npm/v/koa-orm.svg)](https://www.npmjs.com/package/koa-orm)
 [![NPM downloads](https://img.shields.io/npm/dm/koa-orm.svg)](https://www.npmjs.com/package/koa-orm)
 [![Dependency Status](https://david-dm.org/d-band/koa-orm.svg)](https://david-dm.org/d-band/koa-orm)
