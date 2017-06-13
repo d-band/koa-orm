@@ -1,14 +1,13 @@
 # koa-orm
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/d-band/koa-orm.svg)](https://greenkeeper.io/)
-
 [![NPM version](https://img.shields.io/npm/v/koa-orm.svg)](https://www.npmjs.com/package/koa-orm)
 [![NPM downloads](https://img.shields.io/npm/dm/koa-orm.svg)](https://www.npmjs.com/package/koa-orm)
 [![Dependency Status](https://david-dm.org/d-band/koa-orm.svg)](https://david-dm.org/d-band/koa-orm)
 [![Build Status](https://travis-ci.org/d-band/koa-orm.svg?branch=master)](https://travis-ci.org/d-band/koa-orm)
 [![Coverage Status](https://coveralls.io/repos/github/d-band/koa-orm/badge.svg?branch=master)](https://coveralls.io/github/d-band/koa-orm?branch=master)
+[![Greenkeeper badge](https://badges.greenkeeper.io/d-band/koa-orm.svg)](https://greenkeeper.io/)
 
-koa orm using [sequelize](https://github.com/sequelize/sequelize) & [squel](https://github.com/hiddentao/squel).
+> `koa-orm` using [sequelize](https://github.com/sequelize/sequelize) & [squel](https://github.com/hiddentao/squel).
 
 ## Installation
 
