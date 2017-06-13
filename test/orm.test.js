@@ -74,7 +74,7 @@ describe('orm test', function() {
       expect(v[1]).to.deep.equal(data.bars);
       expect(v[2]).to.deep.equal(data.foos[0]);
       expect(v[3]).to.deep.equal(data.bars[0]);
-      expect(v[4]).to.have.property('insertId');
+      expect(v[4]).to.deep.equal([3, 1]);
       done();
     });
   });
@@ -89,7 +89,7 @@ describe('orm test', function() {
         createdAt: new Date(),
         updatedAt: new Date()
       }).query().then(v => {
-      expect(v).to.have.property('insertId');
+      expect(v).to.deep.equal([4, 1]);
       done();
     });
   });
