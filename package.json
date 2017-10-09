@@ -4,8 +4,9 @@
   "description": "koa orm using sequelize & squel",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -R spec",
-    "coveralls": "istanbul cover _mocha -- -R spec && cat ./coverage/lcov.info | coveralls"
+    "test": "mocha --exit -R spec",
+    "report": "istanbul cover _mocha -- --exit -R spec",
+    "coveralls": "npm run report && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
