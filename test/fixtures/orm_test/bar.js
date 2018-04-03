@@ -7,6 +7,9 @@ module.exports = function(sequelize, types) {
     },
     content: {
       type: types.STRING(50)
+    },
+    likes: {
+      type: types.INTEGER
     }
   }, {
     tableName: 'bar'

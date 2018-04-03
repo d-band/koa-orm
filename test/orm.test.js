@@ -20,6 +20,20 @@ describe('orm test', function() {
       .then(() => done());
   });
 
+  it('sum query', done => {
+    const Bar = db.Bar;
+    const num1 = Bar.sum('likes', {
+      where: { title: 'nodata' }
+    });
+    const num2 = Bar.sum('likes');
+    Promise.all([num1, num2]).then(v => {
+      // Bug: https://github.com/sequelize/sequelize/issues/6299
+      expect(v[0]).to.be.NaN;
+      expect(v[1]).to.equal(30);
+      done();
+    });
+  });
+
   it('sql query', done => {
     const foos = db.sql
       .select()
@@ -33,6 +47,7 @@ describe('orm test', function() {
       .from('bar')
       .field('title')
       .field('content')
+      .field('likes')
       .field('foo')
       .query();
 
@@ -49,6 +64,7 @@ describe('orm test', function() {
       .from('bar')
       .field('title')
       .field('content')
+      .field('likes')
       .field('foo')
       .where('title = ?', 'hello')
       .queryOne();
@@ -63,10 +79,10 @@ describe('orm test', function() {
   });
 
   it('raw sql query', done => {
-    const foos = db.query('select name,pass from foo;');
-    const bars = db.query('select title,content,foo from bar;');
+    const foos = db.query('select name, pass from foo;');
+    const bars = db.query('select title, content, likes, foo from bar;');
     const foo = db.queryOne('select name,pass from foo where name=?;', ['hello']);
-    const bar = db.queryOne('select title,content,foo from bar where title=?;', ['hello']);
+    const bar = db.queryOne('select title, content, likes, foo from bar where title=?;', ['hello']);
     const meta = db.query('insert into foo (name, pass, createdAt, updatedAt) values (?, ?, ?, ?);', ['hello3', 'world3', new Date(), new Date()]);
 
     Promise.all([foos, bars, foo, bar, meta]).then(v => {
