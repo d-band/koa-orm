@@ -110,4 +110,34 @@ describe('orm test', function() {
     });
   });
 
+  it('sequelize hooks', done => {
+    const Foo = db.Foo;
+    const bc = new Promise((resolve) => {
+      Foo.beforeCreate(foo => resolve(foo.name));
+    });
+    const bd = new Promise((resolve) => {
+      Foo.beforeDestroy(foo => resolve(foo.id));
+    });
+    const ac = new Promise((resolve) => {
+      Foo.afterCreate(foo => resolve(foo.id));
+    });
+    const ad = new Promise((resolve) => {
+      Foo.afterDestroy(foo => resolve(foo.id));
+    });
+    Foo.create({
+      name: 'hooks',
+      pass: 'hooks'
+    }).then(foo => {
+      return foo.destroy();
+    }).then(() => {
+      Promise.all([bc, bd, ac, ad]).then(result => {
+        expect(result[0]).to.equal('hooks');
+        expect(result[1]).to.equal(5);
+        expect(result[2]).to.equal(5);
+        expect(result[3]).to.equal(5);
+        done();
+      });
+    });
+  });
+
 });
