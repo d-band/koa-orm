@@ -33,7 +33,7 @@
     "coveralls": "^3.0.2",
     "istanbul": "^0.4.5",
     "koa": "^2.7.0",
-    "mocha": "^5.2.0",
+    "mocha": "^6.0.0",
     "mysql2": "^1.6.5",
     "supertest": "^3.4.2"
   }
