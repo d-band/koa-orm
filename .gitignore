@@ -25,4 +25,5 @@ tmp/
 .settings
 .yml
 _site
-coverage
+coverage/
+.nyc_output/
