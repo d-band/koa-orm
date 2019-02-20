@@ -4,7 +4,7 @@ const orm = require('./lib/orm');
 
 module.exports = (configs) => {
   // Object to Array
-  if (!(configs instanceof Array)) {
+  if (!Array.isArray(configs)) {
     configs = [configs];
   }
 
