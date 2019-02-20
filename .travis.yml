@@ -11,5 +11,5 @@ services:
 before_script:
   - mysql -e "create database orm_test;"
 
-script:
+after_success:
   - npm run coveralls
