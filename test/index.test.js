@@ -1,5 +1,6 @@
 'use strict';
 
+const expect = require('chai').expect;
 const request = require('supertest');
 const Koa = require('koa');
 
@@ -19,6 +20,16 @@ describe('koa-orm', function() {
       .then(() => db.Foo.bulkCreate(data.foos))
       .then(() => db.Bar.bulkCreate(data.bars))
       .then(() => done());
+  });
+
+  it('duplicate name', done => {
+    orm.register();
+    orm.register(Object.assign({ name: 'test' }, config));
+    expect(orm.database('test')).to.have.property('sequelize');
+    expect(orm.database('orm_test')).to.have.property('sequelize');
+    const fn = orm.register.bind(null, config);
+    expect(fn).to.throw('Duplicate name: \'orm_test\'');
+    done();
   });
 
   it('orm middleware test', done => {

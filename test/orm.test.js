@@ -20,6 +20,12 @@ describe('orm test', function() {
       .then(() => done());
   });
 
+  it('duplicate name', done => {
+    const fn = orm.bind(null, [config, config]);
+    expect(fn).to.throw('Duplicate name: \'orm_test\'');
+    done();
+  });
+
   it('sum query', done => {
     const Bar = db.Bar;
     const num1 = Bar.sum('likes', {

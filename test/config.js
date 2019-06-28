@@ -5,7 +5,7 @@ const env = process.env;
 
 module.exports = {
   modelPath: join(__dirname, 'fixtures/orm_test/'),
-  db: env.MYSQL_DB || 'orm_test',
+  database: env.MYSQL_DB || 'orm_test',
   username: env.MYSQL_USER || 'root',
   password: env.MYSQL_PASS || null,
   dialect: 'mysql',
