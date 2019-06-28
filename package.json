@@ -1,6 +1,6 @@
 {
   "name": "koa-orm",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "koa orm using sequelize & squel",
   "main": "index.js",
   "scripts": {
