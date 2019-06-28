@@ -3,6 +3,8 @@
 tmp
 spm_modules
 node_modules
+.nyc_output
+.travis.yml
 examples
 coverage
 test
