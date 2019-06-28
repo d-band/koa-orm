@@ -24,7 +24,7 @@ const join = require('path').join;
 const config = {
   name: 'test',
   modelPath: join(__dirname, 'models'),
-  db: 'orm_test',
+  database: 'orm_test',
   username: 'root',
   password: 'pass',
   dialect: 'mysql',
@@ -54,7 +54,7 @@ Multiple database
 const join = require('path').join;
 const configs = [{
   name: 'user',
-  db: 'db_user',
+  database: 'db_user',
   username: 'root',
   password: 'pass',
   dialect: 'mysql',
@@ -63,7 +63,7 @@ const configs = [{
   modelPath: join(__dirname, 'models/user')
 }, {
   name: 'product',
-  db: 'db_product',
+  database: 'db_product',
   username: 'root',
   password: 'pass',
   dialect: 'mysql',
@@ -81,7 +81,7 @@ app.use(async function (ctx) {
   const { Product } = ctx.orm('product');
   const { userId } = ctx.params;
   
-  const user = await User.findById(userId);
+  const user = await User.findByPk(userId);
   const products = await Product.findAll({
     where: { userId }
   });
