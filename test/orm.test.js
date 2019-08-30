@@ -21,6 +21,19 @@ describe('orm test', function() {
   });
 
   it('duplicate name', done => {
+    expect(db).to.have.property('Op');
+    expect(db).to.have.property('Sequelize');
+    expect(db).to.have.property('sequelize');
+    expect(db).to.have.property('sync');
+    expect(db).to.have.property('sql');
+    expect(db).to.have.property('query');
+    expect(db).to.have.property('queryOne');
+    expect(db).to.have.property('Foo');
+    expect(db).to.have.property('Bar');
+    done();
+  });
+
+  it('duplicate name', done => {
     const fn = orm.bind(null, [config, config]);
     expect(fn).to.throw('Duplicate name: \'orm_test\'');
     done();
