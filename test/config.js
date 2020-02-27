@@ -12,9 +12,9 @@ module.exports = {
   host: '127.0.0.1',
   port: 3306,
   pool: {
-    maxConnections: 10,
-    minConnections: 0,
-    maxIdleTime: 30000
+    max: 10,
+    min: 0,
+    idle: 30000
   },
   logging: false
 };
