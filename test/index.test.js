@@ -13,13 +13,12 @@ describe('koa-orm', function() {
 
   const orm = ORM([config]);
 
-  before(done => {
+  before(() => {
     const db = orm.database();
     // init db
-    db.sync({ force: true })
+    return db.sync({ force: true })
       .then(() => db.Foo.bulkCreate(data.foos))
-      .then(() => db.Bar.bulkCreate(data.bars))
-      .then(() => done());
+      .then(() => db.Bar.bulkCreate(data.bars));
   });
 
   it('duplicate name', done => {
@@ -37,19 +36,11 @@ describe('koa-orm', function() {
     app.use(orm.middleware)
       .use((ctx) => {
         // SQL query
-        const foos = ctx.orm().sql
-          .select()
-          .field('name')
-          .field('pass')
-          .from('foo')
-          .query();
+        const foos = ctx.orm().sql('foo')
+          .select('name', 'pass');
 
-        const bars = ctx.orm().sql
-          .select()
-          .from('bar')
-          .field('title')
-          .field('content')
-          .query();
+        const bars = ctx.orm().sql('bar')
+          .select('title', 'content');
 
         return Promise.all([foos, bars]).then(v => {
           ctx.body = { foos: v[0], bars: v[1] };
@@ -72,19 +63,11 @@ describe('koa-orm', function() {
       .use(mw)
       .use((ctx) => {
         // SQL query
-        const foos = ctx.orm().sql
-          .select()
-          .field('name')
-          .field('pass')
-          .from('foo')
-          .query();
+        const foos = ctx.orm().sql('foo')
+          .select('name', 'pass');
 
-        const bars = db.sql
-          .select()
-          .from('bar')
-          .field('title')
-          .field('content')
-          .query();
+        const bars = db.sql('bar')
+          .select('title', 'content');
 
         return Promise.all([foos, bars]).then(v => {
           ctx.body = { foos: v[0], bars: v[1] };

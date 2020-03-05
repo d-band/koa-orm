@@ -7,7 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/d-band/koa-orm/badge.svg?branch=master)](https://coveralls.io/github/d-band/koa-orm?branch=master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/d-band/koa-orm.svg)](https://greenkeeper.io/)
 
-> `koa-orm` using [sequelize](https://github.com/sequelize/sequelize) & [squel](https://github.com/hiddentao/squel).
+> `koa-orm` using [sequelize](https://github.com/sequelize/sequelize) & [sk2](https://github.com/d-band/sk2).
 
 ## Installation
 
@@ -42,8 +42,8 @@ const orm = require('koa-orm')(config);
 app.use(orm.middleware);
 
 app.use(async function (ctx) {
-  const raws = await ctx.orm().sql.select().from('table').query();
-  // const raws = await ctx.orm('test').sql.select().from('table').query();
+  const raws = await ctx.orm().sql.select().from('table');
+  // const raws = await ctx.orm('test').sql('table').select();
   ctx.body = raws;
 });
 ```
