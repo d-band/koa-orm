@@ -45,4 +45,4 @@ module.exports = (initialConfigs) => {
   };
 };
 
-module.exports.sequelize = require('sequelize');
+module.exports.Sequelize = require('sequelize');
