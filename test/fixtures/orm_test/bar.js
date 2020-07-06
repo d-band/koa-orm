@@ -1,6 +1,10 @@
 'use strict';
 
-module.exports = function(sequelize, types) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function(sequelize, types) {
   var Bar = sequelize.define('Bar', {
     title: {
       type: types.STRING(50),

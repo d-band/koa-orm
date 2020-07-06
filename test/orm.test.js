@@ -85,14 +85,20 @@ describe('orm test', function() {
     const bars = db.query('select title, content, likes, foo from bar;');
     const foo = db.queryOne('select name,pass from foo where name=?;', ['hello']);
     const bar = db.queryOne('select title, content, likes, foo from bar where title=?;', ['hello']);
-    const meta = db.query('insert into foo (name, pass, createdAt, updatedAt) values (?, ?, ?, ?);', ['hello3', 'world3', new Date(), new Date()]);
 
-    return Promise.all([foos, bars, foo, bar, meta]).then(v => {
+    return Promise.all([foos, bars, foo, bar]).then(v => {
       expect(v[0]).to.deep.equal(data.foos);
       expect(v[1]).to.deep.equal(data.bars);
       expect(v[2]).to.deep.equal(data.foos[0]);
       expect(v[3]).to.deep.equal(data.bars[0]);
-      expect(v[4]).to.deep.equal([3, 1]);
+    });
+  });
+
+  it('raw sql query insert meta', () => {
+    const meta = db.query('insert into foo (name, pass, createdAt, updatedAt) values (?, ?, ?, ?);', ['hello3', 'world3', new Date(), new Date()]);
+
+    return meta.then(v => {
+      expect(v).to.deep.equal([3, 1]);
     });
   });
 
