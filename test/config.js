@@ -16,5 +16,5 @@ module.exports = {
     min: 0,
     idle: 30000
   },
-  logging: false
+  logging: console.log
 };
